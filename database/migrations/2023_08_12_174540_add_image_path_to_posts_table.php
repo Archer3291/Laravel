@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->date('Fecha_ingreso')->after('Ruta')->nullable()->default(null);
+            $table->string('image_path')->nullable()->after('id');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn('Fecha_ingreso');
+            $table->dropColumn('image_path');
         });
     }
 };
