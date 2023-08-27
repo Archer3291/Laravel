@@ -8,11 +8,10 @@ use App\Models\Post;
 
 class postController extends Controller
 {
-    public function index(){
 
-        $posts = Post::get();
-
-        return view('posts.index', ['posts' => $posts]);
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['home']]);
     }
 
     public function calidad(){
@@ -55,7 +54,7 @@ class postController extends Controller
     }
 
     public function create(){
-        return view('posts.create');
+        return view('posts.create', ['post' => new Post]);
     }
 
     public function store(Request $request){
@@ -68,31 +67,72 @@ class postController extends Controller
             'Ruta' => ['required'],
             'Grado_Academico' => ['required'],
             'Fecha_ingreso' => ['required'],
-            'avatar' => ['required'],
+            'image_path' => ['required'],
         ]);
 
-        $post = new Post;
-
-        if ($request->hasFile('avatar'))
+        if ($request->hasFile('image_path'))
         {
-            $file = $request->file('avatar');
+            $file = $request->file('image_path');
             $destino = 'assets/images/Empleados/';
             $nombreimg = $request->input('Nombre') . '.' . $file->getClientOriginalExtension();
-            $upload = $request->file("avatar")->move($destino, $nombreimg);
-            $post->image_path = $destino . $nombreimg;
+            $upload = $request->file("image_path")->move($destino, $nombreimg);
+        };
+
+        Post::Create([
+            'image_path' => $destino . $nombreimg,
+            'Nombre' => $request -> input('Nombre'),
+            'Apellido' => $request -> input('Apellido'),
+            'Edad' => $request -> input('Edad'),
+            'Puesto' => $request -> input('Puesto'),
+            'Ruta' => $request -> input('Ruta'),
+            'Grado_Academico' => $request -> input('Grado_Academico'),
+            'Fecha_ingreso' => $request -> input('Fecha_ingreso'),
+        ]);
+        
+        return to_route('home')->with('status', 'Agregado correctamente');
+    }
+
+    public function edit(Post $post){
+        return view('posts.edit', ['post' => $post]);
+    }
+
+    public function update(Request $request, Post $post){
+
+        $request->validate([ // Validacion de datos en el formulario editarf
+            'Nombre' => ['required'],
+            'Apellido' => ['required'],
+            'Edad' => ['required'],
+            'Puesto' => ['required'],
+            'Ruta' => ['required'],
+            'Grado_Academico' => ['required'],
+            'Fecha_ingreso' => ['required'],
+            'image_path' => ['required'],
+        ]);
+
+        if ($request->hasFile('image_path'))
+        {
+            $file = $request->file('image_path');
+            $destino = 'assets/images/Empleados/';
+            $nombreimg = $request->input('Nombre') . '.' . $file->getClientOriginalExtension();
+            $upload = $request->file("image_path")->move($destino, $nombreimg);
         }
 
-        $post->Nombre = ucfirst(strtolower($request->input('Nombre')));
-        $post->Apellido = ucfirst(strtolower($request->input('Apellido')));
-        $post->Edad = $request->input('Edad');
-        $post->Puesto = ucfirst(strtolower($request->input('Puesto')));
-        $post->Ruta = ucfirst(strtolower($request->input('Ruta')));
-        $post->Grado_Academico = ucfirst(strtolower($request->input('Grado_Academico')));
-        $post->Fecha_ingreso = ucfirst(strtolower($request->input('Fecha_ingreso')));
-        $post->save();
+        $post->update([
+            'image_path' => $destino . $nombreimg,
+            'Nombre' => $request -> input('Nombre'),
+            'Apellido' => $request -> input('Apellido'),
+            'Edad' => $request -> input('Edad'),
+            'Puesto' => $request -> input('Puesto'),
+            'Ruta' => $request -> input('Ruta'),
+            'Grado_Academico' => $request -> input('Grado_Academico'),
+            'Fecha_ingreso' => $request -> input('Fecha_ingreso'),
+        ]);
 
-        session()->flash('status', 'Agregado correctamente');
+        return to_route('home')->with('status', 'Editado correctamente');
+    }
 
-        return to_route('home');
+    public function destroy(Post $post){
+        $post->delete();
+        return to_route('home')->with('status', 'Eliminado correctamente');
     }
 }

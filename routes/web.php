@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\postController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,16 +17,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::view('/', 'welcome')->name('home');
-Route::get('/blog', [postController::class, 'index'])->name('posts.index');
-
 
 Route::get('/calidad', [postController::class, 'calidad'])->name('Calidad');
 Route::get('/produccion', [postController::class, 'produccion'])->name('Producción');
 Route::get('/supervisor', [postController::class, 'supervisor'])->name('Supervisor');
 Route::get('/sistemas', [postController::class, 'sistemas'])->name('Sistemas');
 Route::get('/rh', [postController::class, 'rh'])->name('Recursos humanos');
+Route::view('/profile', 'posts.profile')->name('perfil');
+
+Route::resource('blog', PostController::class, [
+    'names' => 'posts',
+    'parameters' => ['blog' => 'post']
+]);
+
+Route::view('/login', 'auth.login')->name('login');
+Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 
-Route::get('/blog/create', [postController::class, 'create'])->name('create');
-Route::post('/blog', [postController::class, 'store'])->name('posts.store');
-Route::get('/blog/{post}', [postController::class, 'show'])->name('posts.show');
+Route::view('/register', 'auth.register')->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store']);

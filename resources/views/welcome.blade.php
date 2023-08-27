@@ -1,8 +1,11 @@
 <x-layouts.app title="Home" description="Home meta description">
-    <main class="p-12 md:ml-64 h-auto">
-        <section class="">
+    @auth
+
+        <main class="p-12 md:ml-64 h-auto">
+            <section class="">
+            @endauth
             <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
-                <div class="hover:scale-110 hover:backdrop-blur-lg duration-150 p-4 ease-in-out mb-8 lg:mb-16">
+                <div class="hover:scale-110 duration-150 p-4 ease-in-out mb-8 lg:mb-16">
                     <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
                         Electronics
                         company </h2>
@@ -14,7 +17,7 @@
                     </p>
                 </div>
                 <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0 p-8">
-                    <div class="hover:scale-110 hover:backdrop-blur-lg duration-150 ease-in-out cursor-default p-4">
+                    <div class="hover:scale-110 duration-150 ease-in-out cursor-default p-4">
                         <div class="flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="dark:text-white" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -31,7 +34,7 @@
                             mantener la confianza y satisfaccion de nuestros clientes.
                         </p>
                     </div>
-                    <div class="hover:scale-110 hover:backdrop-blur-lg duration-150 ease-in-out cursor-default p-4">
+                    <div class="hover:scale-110 duration-150 ease-in-out cursor-default p-4">
                         <div class="flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="dark:text-white" width="24"
                                 height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -52,7 +55,7 @@
                             libres. Esta labor se debe desempeñar de forma ética y satisfactoria para nosotros, nuestros
                             clientes y el resto de la sociedad.</p>
                     </div>
-                    <div class="hover:scale-110 hover:backdrop-blur-lg duration-150 ease-in-out cursor-default p-4">
+                    <div class="hover:scale-110 duration-150 ease-in-out cursor-default p-4">
                         <div class="flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="dark:text-white" width="24"
                                 height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -80,7 +83,10 @@
                         width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
-        </section>
-    </main>
+                @auth
+
+            </section>
+        </main>
+    @endauth
 
 </x-layouts.app>

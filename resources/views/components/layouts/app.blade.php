@@ -6,10 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="{{ asset('assets/images/logo/logo.png') }}" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <meta name="description" content="{{ $description ?? 'Default meta description' }}">
     <title> lanro - {{ $title ?? '' }} </title>
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body::-webkit-scrollbar {
             width: 4px;
@@ -40,7 +39,7 @@
 
 {{-- Color de fondo: bg-gradient-to-r from-rose-100 to-teal-100 dark:bg-gradient-to-r dark:from-slate-900 dark:via-purple-900 dark:to-slate-900 --}}
 
-<body class="dark:bg-slate-900 bg-white dark:oscuro light">
+<body class="bg-slate-100 dark:bg-slate-900 dark:oscuro light selection:bg-violet-500 selection:text-white">
     <x-layouts.nav />
 
     @if (session('status'))
