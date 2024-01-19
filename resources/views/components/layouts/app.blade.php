@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="{{ asset('assets/images/logo/logo.png') }}" type="image/x-icon">
     <meta name="description" content="{{ $description ?? 'Default meta description' }}">
     <title> lanro - {{ $title ?? '' }} </title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body::-webkit-scrollbar {
             width: 4px;
